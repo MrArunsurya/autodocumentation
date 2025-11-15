@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SEC - Auto Event Document Generator</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: url('/static/sec_background.jpg') no-repeat center center fixed;
+      background-size: cover;
+      margin: 0;
+      padding: 0;
+      color: #fff;
+      overflow-y: auto;
+    }
+
+    .overlay {
+      background: rgba(0,0,0,0.55);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 40px 20px;
+    }
+
+    .container {
+      width: 820px;
+      max-width: calc(100% - 40px);
+      background: rgba(255,255,255,0.12);
+      border-radius: 14px;
+      padding: 26px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 8px;
+    }
+.logo img { 
+  width: 650px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+    h1 {
+      text-align: center;
+      margin: 6px 0 18px;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    label { display:block; margin-top:12px; color: #f3f3f3; font-weight:500; }
+    input, textarea, select {
+      width: 100%; padding: 10px 12px; margin-top:6px; border-radius:10px;
+      border: none; outline: none; font-size: 14px;
+      background: rgba(255,255,255,0.95); color: #333;
+    }
+
+    .row { display:flex; gap:12px; }
+    .col { flex:1; }
+
+    .actions { display:flex; gap:12px; margin-top:18px; }
+    .btn {
+      flex:1;
+      padding: 12px 16px;
+      border-radius:10px;
+      border:none;
+      cursor:pointer;
+      font-weight:700;
+    }
+    .btn-primary { background:#8b0000; color:#fff; }
+    .btn-secondary { background:#ddd; color:#333; }
+
+    @media (max-width:900px) {
+      .row { flex-direction: column; }
+      .logo img { width: 160px; }
+    }
+  </style>
+</head>
+<body>
+<div class="overlay">
+  <div class="container">
+    <div class="logo"><img src="/static/sec_logo.png" alt="SEC logo"></div>
+    <h1>SURYA ENGINEERING COLLEGE — Event Report Generator</h1>
+
+    <form action="{{ url_for('generate') }}" method="post" enctype="multipart/form-data">
+      <label>Reference No. (Manual)</label>
+      <input type="text" name="ref_no" placeholder="SEC/BME/2024-25/01" required>
+
+      <label>Reference Date</label>
+      <input type="date" name="date_ref" required>
+
+      <label>Event Title</label>
+      <input type="text" name="title" required>
+
+      <div class="row">
+        <div class="col">
+          <label>Department</label>
+          <input type="text" name="department" required>
+        </div>
+        <div class="col">
+          <label>Academic Year</label>
+          <input type="text" name="academic_year" placeholder="2024-2025" required>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <label>Date of Activity</label>
+          <input type="text" name="date_activity" placeholder="16.04.2025 & 17.04.2025" required>
+        </div>
+        <div class="col">
+          <label>Organized By</label>
+          <input type="text" name="organized_by" value="Department of BME" required>
+        </div>
+      </div>
+
+      <label>Workshop Overview (short paragraph)</label>
+      <textarea name="overview" rows="3"></textarea>
+
+      <label>Day 1 Details</label>
+      <textarea name="day1" rows="2"></textarea>
+
+      <label>Day 2 Details</label>
+      <textarea name="day2" rows="2"></textarea>
+
+      <label>Learning Outcomes</label>
+      <textarea name="learning_outcomes" rows="2"></textarea>
+
+      <label>Conclusion</label>
+      <textarea name="conclusion" rows="2"></textarea>
+
+      <label>Additional Circular Text (optional)</label>
+      <textarea name="circular_text" rows="2"></textarea>
+
+      <label>Upload Invitation / Circular Image (jpg/png)</label>
+      <input type="file" name="invitation" accept="image/*" required>
+
+      <label>Upload Event Photos (4-10 images)</label>
+      <input type="file" name="photos" accept="image/*" multiple required>
+
+      <div class="actions">
+        <button class="btn btn-primary" type="submit">Generate & Preview</button>
+        <a class="btn btn-secondary" href="{{ url_for('index') }}">Reset</a>
+      </div>
+    </form>
+  </div>
+</div>
+</body>
+</html>

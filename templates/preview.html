@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Preview — SEC Report</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+    body { font-family: "Times New Roman", Times, serif; background:#f3f3f3; padding:20px; }
+    .page { width: 800px; margin: 20px auto; background: white; padding: 30px; box-shadow:0 4px 18px rgba(0,0,0,0.15); }
+    header { text-align:center; }
+    header img { width:120px; display:block; margin: 0 auto 6px; }
+    h1 { margin: 0; font-size: 16px; }
+    .meta { margin-top: 10px; display:flex; justify-content:space-between; font-size: 14px; }
+    .title { text-align:center; margin: 18px 0; font-weight:700; font-size:18px; }
+    table.details { width:100%; margin-top: 12px; border-collapse: collapse; }
+    table.details td { padding:6px 8px; vertical-align: top; }
+    h3 { margin: 12px 0 6px; font-size: 15px; }
+    .photos { margin-top: 12px; display:flex; flex-wrap:wrap; gap:10px; }
+    .photos img { width: 48%; object-fit:cover; border:1px solid #ccc; }
+    .actions { width:800px; margin: 16px auto; display:flex; gap:12px; justify-content:center; }
+    .btn { padding:10px 16px; border-radius:8px; text-decoration:none; color:white; background:#8b0000; }
+    .btn-secondary { background:#555; }
+    .sign-row { display:flex; justify-content:space-between; margin-top:40px; }
+    .small-note { font-size:12px; color:#666; margin-top:8px; }
+  </style>
+</head>
+<body>
+
+<div class="page">
+  <header>
+    <img src="{{ url_for('static', filename='sec_logo.png') }}" alt="SEC Logo">
+    <h1>SURYA ENGINEERING COLLEGE</h1>
+    <div class="meta">
+        <div>Ref: {{ data.ref_no }}</div>
+        <div>Date: {{ data.date_ref }}</div>
+    </div>
+  </header>
+
+  <div class="title">CIRCULAR</div>
+  {% if invitation %}
+    <div style="text-align:center; margin-top:10px;">
+      <img src="{{ '/' + invitation }}" style="max-width:100%; height:auto; border:1px solid #ddd;">
+    </div>
+  {% else %}
+    <p>{{ data.circular_text }}</p>
+  {% endif %}
+
+  <div class="small-note">HoD &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PRINCIPAL</div>
+</div>
+
+<div class="page">
+  <header style="text-align:left;">
+    <img src="{{ url_for('static', filename='sec_logo.png') }}" style="width:80px; float:left; margin-right:10px;">
+    <div style="overflow:hidden;">
+      <div style="font-weight:700;">DEPARTMENT OF {{ data.department }}</div>
+      <div style="font-size:18px; font-weight:700; margin-top:6px;">REPORT OF THE EVENT</div>
+    </div>
+  </header>
+
+  <table class="details">
+    <tr><td><strong>Name of the activity :</strong></td><td>{{ data.title }}</td></tr>
+    <tr><td><strong>Department :</strong></td><td>{{ data.department }}</td></tr>
+    <tr><td><strong>Academic year :</strong></td><td>{{ data.academic_year }}</td></tr>
+    <tr><td><strong>Date of activity conducted :</strong></td><td>{{ data.date_activity }}</td></tr>
+    <tr><td><strong>Organized by :</strong></td><td>{{ data.organized_by }}</td></tr>
+  </table>
+
+  <h3>Workshop Overview</h3>
+  <p>{{ data.overview }}</p>
+
+  {% if data.day1 %}
+    <h3>Day 1: Fundamentals and Demonstrations</h3>
+    <p>{{ data.day1 }}</p>
+  {% endif %}
+  {% if data.day2 %}
+    <h3>Day 2: Advanced Troubleshooting and Maintenance</h3>
+    <p>{{ data.day2 }}</p>
+  {% endif %}
+
+  {% if data.learning_outcomes %}
+    <h3>Learning Outcomes</h3>
+    <p>{{ data.learning_outcomes }}</p>
+  {% endif %}
+
+  <h3>Conclusion</h3>
+  <p>{{ data.conclusion }}</p>
+
+  <div class="sign-row">
+    <div>HoD</div>
+    <div>PRINCIPAL</div>
+  </div>
+</div>
+
+<div class="page">
+  <header>
+    <img src="{{ url_for('static', filename='sec_logo.png') }}" alt="SEC Logo">
+    <div style="text-align:center; font-weight:700; margin-top:6px;">EVENT PHOTOGRAPHS</div>
+  </header>
+
+  <div class="photos">
+    {% for p in photos %}
+      <img src="{{ '/' + p }}" alt="photo">
+    {% endfor %}
+  </div>
+</div>
+
+<div class="actions">
+  <a class="btn" href="{{ url_for('download', fmt='docx', filename=docx) }}">Download DOCX</a>
+  <a class="btn" href="{{ url_for('download', fmt='pdf', filename=pdf) }}">Download PDF</a>
+  <a class="btn btn-secondary" href="{{ url_for('index') }}">Edit</a>
+</div>
+
+</body>
+</html>
